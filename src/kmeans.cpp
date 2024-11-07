@@ -10,7 +10,9 @@ void KMeans::run() {
     initialize_centroids();
     
     bool has_converged = false;
-    while (!has_converged) {
+
+    int max_it = 500;
+    while (!has_converged && max_it--) {
         has_converged = true;
         for (int i = 0; i < data.size(); i++) {
             int best_cluster =  find_closest_centroid(data[i]);

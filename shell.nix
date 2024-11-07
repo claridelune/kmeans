@@ -5,6 +5,7 @@ pkgs.mkShell {
         pkgs.cmake
         pkgs.python312
         pkgs.python312Packages.matplotlib
+        pkgs.python312Packages.pandas
         pkgs.python312Packages.numpy
     ];
 

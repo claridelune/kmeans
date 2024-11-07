@@ -42,7 +42,7 @@ class KDTree {
       public:
         KDTree() : root(nullptr), size(0) {}
         ~KDTree() {
-            clear_recursive(root);
+            clear();
         }
 
         void clear_recursive(Node *node) {

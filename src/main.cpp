@@ -1,10 +1,10 @@
-// #include "../include/kmeans.h"
 #include "kmeans_kdtree.h"
+#include "kmeans_brute_force.h"
 #include "utils.h"
 #include "timer.h"
 #include <iostream>
 
-/* void run_timing_experiment(const std::string &data_file,
+void run_timing_experiment(const std::string &data_file,
                            const std::vector<int> &ks,
                            const std::vector<int> &ns,
                            const std::string &output_file) {
@@ -13,17 +13,40 @@
             auto data = load_data(data_file, n);
 
             Timer timer;
-            auto [centroids1, assignments1] = k_means(data, k);
+            KMeansBF kmeans_bf(k, data);
+            kmeans_bf.run();
             double time_without_kdtree = timer.elapsed();
 
             timer = Timer();
-            // con kd tree
+            KMeansKDTree kmeans_kd(k, data);
+            kmeans_kd.run();
             double time_with_kdtree = timer.elapsed();
 
             save_timing_results(output_file, k, n, time_without_kdtree, time_with_kdtree);
+            std::cout << "time results saved" << std::endl;
         }
     }
-} */
+}
+
+
+void run_experiment(const std::string &data_file, int k, int n, int experiment_id) {
+    auto data = load_data(data_file, n);
+
+    KMeansBF kmeans_bf(k, data);
+    kmeans_bf.run();
+
+    KMeansKDTree kmeans_kd(k, data);
+    kmeans_kd.run();
+
+    std::string clusters_file_kd = "data/kd_cluster_" + std::to_string(experiment_id) + ".csv";
+    std::string assignments_file_kd = "data/kd_assignments_" + std::to_string(experiment_id) + ".csv";
+    std::string clusters_file_bf = "data/bf_cluster_" + std::to_string(experiment_id) + ".csv";
+    std::string assignments_file_bf = "data/bf_assignments_" + std::to_string(experiment_id) + ".csv";
+    save_clustering_results(assignments_file_kd, clusters_file_kd, kmeans_kd.assignments, kmeans_kd.centroids);
+    save_clustering_results(assignments_file_bf, clusters_file_bf, kmeans_bf.assignments, kmeans_bf.centroids);
+
+    std::cout << "Experiment " << experiment_id << " completed and saved.\n";
+}
 
 int main() {
     const std::string data_file = "data/data2k.csv";
@@ -32,18 +55,18 @@ int main() {
     const std::vector<int> ks2 = {5, 15, 25, 50, 75, 100, 125, 150, 200};
     const std::vector<int> ns2 = {1000, 1450, 1900, 2400};
     
-    // run_timing_experiment(data_file, ks1, ns1, "data/times_k_fixed.csv");
-    // run_timing_experiment(data_file, ks2, ns2, "data/times_n_fixed.csv");
-    auto data = load_data(data_file, 2400);
-    std::cout << data.size() << std::endl;
+    run_timing_experiment(data_file, ks1, ns1, "data/times_k_fixed.csv");
+    run_timing_experiment(data_file, ks2, ns2, "data/times_n_fixed.csv");
 
-    KMeansKDTree kmeans_kd(5, data);
+    for (int i = 1; i <= 10; ++i) {
+        run_experiment(data_file, 18, 2400, i);
+    }
+
+    /* KMeansKDTree kmeans_kd(5, data);
     kmeans_kd.run();
     auto centroids = kmeans_kd.centroids;
     auto assignments = kmeans_kd.assignments;
-    save_clustering_results("data/clusters.csv", "data/centroids.csv", assignments, centroids);
-
-    std::cout << "end xd" << std::endl;
+    save_clustering_results("data/clusters.csv", "data/centroids.csv", assignments, centroids); */
 
     return 0;
 }

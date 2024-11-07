@@ -10,6 +10,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 set(SOURCES
     src/kmeans.cpp
     src/kmeans_kdtree.cpp
+    src/kmeans_brute_force.cpp
     src/main.cpp
     src/timer.cpp
 )

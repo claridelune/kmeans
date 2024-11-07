@@ -53,10 +53,10 @@ inline std::vector<std::vector<double>> load_data(const std::string& file_path, 
     return data;
 }
 
-/* inline void save_timing_results(const std::string& file_path, int k, int n, double time_without_kdtree, double time_with_kdtree) {
+inline void save_timing_results(const std::string& file_path, int k, int n, double time_without_kdtree, double time_with_kdtree) {
     std::ofstream file(file_path, std::ios::app);
     file << k << "," << n << "," << time_without_kdtree << "," << time_with_kdtree << "\n";
-} */
+}
 
 inline void save_clustering_results(const std::string& clusters_file, const std::string& centroids_file, const std::vector<int>& assignments, const std::vector<std::vector<double>>& centroids) {
     std::ofstream clusters_out(clusters_file);

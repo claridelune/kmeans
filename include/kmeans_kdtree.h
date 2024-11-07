@@ -7,6 +7,7 @@
 class KMeansKDTree : public KMeans {
     public:
         KMeansKDTree(int k, std::vector<Point>& data) : KMeans(k, data) {}
+        ~KMeansKDTree() {kdtree.clear();}
     private:
         KDTree kdtree;
 
