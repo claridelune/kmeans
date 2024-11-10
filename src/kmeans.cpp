@@ -11,8 +11,7 @@ void KMeans::run() {
     
     bool has_converged = false;
 
-    int max_it = 500;
-    while (!has_converged && max_it--) {
+    while (!has_converged) {
         has_converged = true;
         for (int i = 0; i < data.size(); i++) {
             int best_cluster =  find_closest_centroid(data[i]);
@@ -22,7 +21,6 @@ void KMeans::run() {
                 has_converged = false;
             }
         }
-
         update_centroids();
     }
 }
@@ -55,6 +53,10 @@ void KMeans::update_centroids() {
     for (int cluster = 0; cluster < k; cluster++) {
         const auto count = std::max(1, counts[cluster]);
         for (int j = 0; j < new_means[cluster].size(); j++) {
+          if (!counts[cluster]) {
+              new_means[cluster] = data[0];
+              continue;
+          }
             new_means[cluster][j] /= counts[cluster];
         }
     }

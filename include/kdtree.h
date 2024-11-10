@@ -6,7 +6,6 @@
 class KDTree {
     private:
         Node* root;
-        int size;
 
         void nearest_recursive(Node* node, std::vector<double>& point, double& min_distance, Node*& best_node) const {
             if (!node) return;
@@ -40,6 +39,7 @@ class KDTree {
         }
 
       public:
+        int size;
         KDTree() : root(nullptr), size(0) {}
         ~KDTree() {
             clear();
@@ -58,21 +58,18 @@ class KDTree {
             size = 0;
         }
 
-        void insert(std::vector<double>& point) {
+        void insert(const std::vector<double>& point) {
             Node** p = &root;
 
             int depth = 0;
 
             while (*p) {
-                if ((*p)->values == point) {
-                    return;
-                }
                 int axis = depth % point.size();
 
                 if (point[axis] < (*p)->values[axis]) {
-                    p = &(*p)->left;
+                    p = &((*p)->left);
                 } else {
-                    p = &(*p)->right;
+                    p = &((*p)->right);
                 }
                 depth++;
             }
@@ -87,6 +84,20 @@ class KDTree {
             nearest_recursive(root, point, min_distance, best_node);
 
             return *best_node;
+        }
+
+        void rec_print(Node* &p){
+          if (!p) return;
+            rec_print(p->left);
+            for (int i=0; i<p->values.size();i++){
+                std::cout<<p->values[i]<<" ";
+            }
+            std::cout<<"\n";
+            rec_print(p->right);
+        }
+        void print(){
+            Node* p=root;
+            rec_print(p);
         }
 };
 

@@ -61,12 +61,5 @@ int main() {
     for (int i = 1; i <= 10; ++i) {
         run_experiment(data_file, 18, 2400, i);
     }
-
-    /* KMeansKDTree kmeans_kd(5, data);
-    kmeans_kd.run();
-    auto centroids = kmeans_kd.centroids;
-    auto assignments = kmeans_kd.assignments;
-    save_clustering_results("data/clusters.csv", "data/centroids.csv", assignments, centroids); */
-
     return 0;
 }

@@ -3,6 +3,8 @@
 pkgs.mkShell {
     buildInputs = [
         pkgs.cmake
+        pkgs.ranger
+        pkgs.feh
         pkgs.python312
         pkgs.python312Packages.matplotlib
         pkgs.python312Packages.pandas

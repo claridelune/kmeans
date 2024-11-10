@@ -26,7 +26,6 @@ def plot_clusters_comparison(data_points, bf_assignments_file, bf_centroids_file
     axs[0].set_title(f"Fuerza Bruta - Experimento {experiment_id}")
     axs[0].set_xlabel("X")
     axs[0].set_ylabel("Y")
-    axs[0].legend()
 
     # Visualización para el método de KD-tree
     for cluster_id in kd_assignments['cluster'].unique():
@@ -37,7 +36,6 @@ def plot_clusters_comparison(data_points, bf_assignments_file, bf_centroids_file
     axs[1].scatter(kd_centroids[0], kd_centroids[1], c='black', marker='x', s=100, label='Centroids')
     axs[1].set_title(f"KD-tree - Experimento {experiment_id}")
     axs[1].set_xlabel("X")
-    axs[1].legend()
 
     # Guardar la imagen
     plt.suptitle(f"Comparación de Clustering - Experimento {experiment_id}")
